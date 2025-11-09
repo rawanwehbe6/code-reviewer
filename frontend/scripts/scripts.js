@@ -1,6 +1,3 @@
-// function trigger_alert(){
-//     alert("trigger_alert() is connected and working!");
-// }
 
 // input:
 // language
@@ -22,6 +19,7 @@ async function send_review() {
 
     if(code.trim() === ''){
         alert("Code field can't be empty.");
+        return;
     }
     const payload = {
         language: language,
@@ -29,7 +27,7 @@ async function send_review() {
         code: code
     };
 
-    const response = await fetch('review.php', {
+    const response = await fetch('../api/review.php', {
         method : 'POST',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify(payload)
@@ -39,20 +37,24 @@ async function send_review() {
     //validate response
 
 
-
-
     //build html table to return: th=column, tr=row, td=cell
-    let result_html=`<table><tr>Severity</tr><tr>File</tr><tr>Issue</tr><tr>Suggestions</tr>`;
+    let result_html=`<table>
+                        <tr>
+                        <th>Severity</th>
+                        <th>File</th>
+                        <th>Issue</th>
+                        <th>Suggestions</th>
+                        </tr>`;
 
     response_data.forEach(element => { //array
         result_html += `<tr>
             <td class="${element.severity}">${element.severity}</td>
-            <td>${element.file}/td>
+            <td>${element.file}</td>
             <td>${element.issue}</td>
             <td>${element.suggestion}</td>
         </tr>`;
     });
     result_html+=`</table>`;
 
-    document.getElementById('result').innerHTML = result_html;
+    document.getElementById('results').innerHTML = result_html;
 }
