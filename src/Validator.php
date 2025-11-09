@@ -49,4 +49,14 @@ class Validator
             'suggestion' => trim((string) $issue['suggestion']),
         ];
     }
+
+    private static function fillMissingFields(array $issue): array
+    {
+        return [
+            'severity'   => isset($issue['severity']) ? (string) $issue['severity'] : 'low',
+            'file'       => isset($issue['file']) ? (string) $issue['file'] : 'unknown',
+            'issue'      => isset($issue['issue']) ? (string) $issue['issue'] : 'Unspecified issue',
+            'suggestion' => isset($issue['suggestion']) ? (string) $issue['suggestion'] : 'No suggestion provided',
+        ];
+    }
 }
