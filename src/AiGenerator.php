@@ -9,7 +9,6 @@ class AiGenerator
         $apiKey = getenv('OPENAI_API_KEY');
 
         if (!$apiKey) {
-            echo "apiKey not found";
             
             return self::fallbackIssues($code, $file, $language);
         }
@@ -18,10 +17,9 @@ class AiGenerator
             $issues = self::callOpenAiAndParse($apiKey, $code, $file, $language);
 
             if (!is_array($issues) || empty($issues)) {
-                echo "api returned empty array";
                 return self::fallbackIssues($code, $file, $language);
             }
-            echo "api validation success";
+            // echo "api validation success";
             return $issues;
         } catch (\Throwable $e) {
             return self::fallbackIssues($code, $file, $language);
@@ -107,7 +105,7 @@ class AiGenerator
 
         $status = curl_getinfo($ch, CURLINFO_HTTP_CODE);
         curl_close($ch);
-
+        
         if ($status < 200 || $status >= 300) {
             throw new \RuntimeException('OpenAI HTTP status ' . $status);
         }
