@@ -1,0 +1,170 @@
+🧠 The Big Idea
+
+You are building a mini AI-powered code review service.
+
+Think of it like this:
+
+You send a piece of code to a PHP API → the API “pretends” to ask an AI to review it → the API sends back a structured list of issues and suggestions in JSON.
+
+This is not a real AI model — it’s a simulation or “mock” version.
+The goal is to practice designing APIs with strict validation and clear output schemas — like what a real AI code review tool would need.
+
+🧩 The Two Roles
+
+The project is split into two roles (like pair programming):
+
+👨‍💻 Person A — “Driver”
+
+Builds the PHP API endpoint (e.g. review.php)
+
+Handles the HTTP request and response
+
+Parses JSON input
+
+Returns a structured JSON response (list of review issues)
+
+Makes sure the response always follows the schema defined by the Critic
+
+👩‍🔬 Person B — “Critic”
+
+Defines the JSON schema (the format that all reviews must follow)
+
+Defines rules and allowed values (e.g. severity can only be low, medium, high)
+
+Writes automated JavaScript tests that call the API and check if the response:
+
+Is valid JSON
+
+Has all required fields
+
+Has allowed severity values
+
+Contains meaningful issues (like “missing validation”)
+
+🧱 What the API Does (Step by Step)
+1. Input (Request)
+
+A client sends a JSON payload like this:
+
+{
+  "language": "python",
+  "filename": "app.py",
+  "code": "def login():\n    password = input('Enter password: ')\n    print('Logged in!')"
+}
+
+2. Processing (Mock “AI Review”)
+
+The API (PHP script) looks at the code and pretends to ask an AI something like:
+
+“Find problems in this code and give suggestions.”
+
+Then it generates structured feedback — for example:
+
+[
+  {
+    "severity": "high",
+    "file": "app.py",
+    "issue": "Function accepts user input without validation.",
+    "suggestion": "Add input validation to ensure safety.",
+    "line": 2
+  },
+  {
+    "severity": "medium",
+    "file": "app.py",
+    "issue": "No error handling present.",
+    "suggestion": "Use try-except blocks to handle errors gracefully.",
+    "line": 1
+  }
+]
+
+3. Output (Response)
+
+The PHP API sends that list back to the client.
+✅ Always valid JSON
+✅ Always matches the Critic’s schema
+
+📋 The Schema (Defined by Person B)
+
+Person B says exactly how every “review item” must look.
+
+Example schema:
+
+Field	Type	Description
+severity	string	must be “low”, “medium”, or “high”
+file	string	filename where issue is found
+issue	string	description of the problem
+suggestion	string	how to fix it
+line (opt.)	number	line number (optional)
+
+So every single review item must have severity, file, issue, and suggestion.
+
+If one is missing or invalid (e.g. severity: "urgent"), the test should fail.
+
+⚙️ Guardrails / Validation
+
+The PHP API must validate what it returns:
+
+Only allowed severities: "low", "medium", "high"
+
+Always return an array (even empty)
+
+No missing fields
+
+No nonsense like "improve performance" with no explanation
+
+If something is wrong → it must fix or reject it before sending.
+
+🧪 The Tests (Done by Person B)
+
+Person B writes JavaScript tests that:
+
+Send sample JSON input to the PHP endpoint (fetch() or similar)
+
+Parse the response
+
+Check:
+
+Is it valid JSON?
+
+Is it an array?
+
+Does each item have all required fields?
+
+Are severity values valid?
+
+Does at least one issue mention “validation” (for the sample Python code)?
+
+If any of these fail → the test prints an error.
+
+⚡ Optional Extras
+
+You can define “extended” schema mode → includes more fields (like rule_id, category)
+
+Add a config file in PHP for:
+
+Allowed severities
+
+Strict mode (reject responses that don’t match schema)
+
+Add logs to record “bad” AI issues for later debugging
+
+🧍‍♂️🧍‍♀️ Putting It All Together
+Role	Responsibility	Tech
+Person A (Driver)	Build the PHP API endpoint	PHP
+Person B (Critic)	Define schema + write validation tests	JSON Schema + JavaScript tests
+
+The final setup looks like this:
+
+Client (JS Test)
+   ↓
+review.php (API)
+   ↓
+Mock AI generates review
+   ↓
+Validation layer ensures schema compliance
+   ↓
+JSON response (structured)
+
+💡 In One Sentence
+
+You’re building a fake AI code review API in PHP that returns structured, validated JSON review items — and a JS test suite that ensures the API always returns well-formed, schema-compliant results.
