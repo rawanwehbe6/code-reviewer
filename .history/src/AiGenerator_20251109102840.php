@@ -38,6 +38,7 @@ class AiGenerator
 
         $mentionsValidation = str_contains($lowerCode, 'validat'); // "validate", "validation", etc.
 
+        // This covers the collaborator’s example exactly
         if ($looksLikeDataSave && !$mentionsValidation) {
             return [[
                 'severity'   => 'high',
