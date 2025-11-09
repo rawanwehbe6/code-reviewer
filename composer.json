@@ -1,0 +1,14 @@
+{
+    "name": "code-reviewer/project",
+    "description": "Code reviewer service",
+    "type": "project",
+    "require": {
+        "php": ">=7.4",
+        "vlucas/phpdotenv": "^5.5"
+    },
+    "autoload": {
+        "classmap": ["src/"]
+    },
+    "minimum-stability": "stable",
+    "license": "MIT"
+}
