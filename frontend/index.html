@@ -4,7 +4,8 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>AI-Assited Code Review</title>
-        <link rel="stylesheet" href="styles/style.css">
+        <link rel="stylesheet" href="styles/styles.css">
+        
     </head>
     <body>
         <header>
@@ -23,12 +24,13 @@
             <label>Filename:</label>
             <input id="filename" type="text" placeholder="example.py" />
 
-            <label>Code:</label>
+            <label id="code-title-field">Code:</label>
             <textarea id="code"></textarea>
 
             <button onclick="send_review()">Submit for Review</button>
 
-            <div id="results"></div>
+            <label>Result:</label>
+            <div id="results">result</div>
 
         </main>
 
