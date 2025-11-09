@@ -9,6 +9,8 @@ class AiGenerator
         $apiKey = getenv('OPENAI_API_KEY');
 
         if (!$apiKey) {
+            echo "apiKey not found";
+            
             return self::fallbackIssues($code, $file, $language);
         }
 
@@ -16,9 +18,10 @@ class AiGenerator
             $issues = self::callOpenAiAndParse($apiKey, $code, $file, $language);
 
             if (!is_array($issues) || empty($issues)) {
+                echo "api returned empty array";
                 return self::fallbackIssues($code, $file, $language);
             }
-
+            echo "api validation success";
             return $issues;
         } catch (\Throwable $e) {
             return self::fallbackIssues($code, $file, $language);
@@ -47,7 +50,14 @@ class AiGenerator
             ]];
         }
 
-        return [];
+        return [
+            [
+                'severity'   => 'low',
+                'file'       => 'none',
+                'issue'      => 'No issues detected.',
+                'suggestion' => 'Your code looks fine.',
+            ]
+        ];
     }
     private static function callOpenAiAndParse(
         string $apiKey,
