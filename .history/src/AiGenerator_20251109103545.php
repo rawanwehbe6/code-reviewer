@@ -124,18 +124,4 @@ class AiGenerator
 
         return $issues;
     }
-    private static function buildPrompt(string $code, string $file, ?string $language): string
-    {
-        $langPart = $language ? "Language: {$language}\n" : '';
-
-        return <<<PROMPT
-You are reviewing a single source file.
-
-File name: {$file}
-{$langPart}
-Code:
-```text
-{$code}
-PROMPT;
-    }
 }
