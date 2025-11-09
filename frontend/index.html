@@ -1,4 +1,4 @@
-<!-- http://localhost/ai-generated-code-reviewer-tech-assignment4/frontend/index.html -->
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -30,8 +30,15 @@
 
             <button onclick="send_review()">Submit for Review</button>
 
-            <label>Result:</label>
-            <div id="results">result</div>
+            <label>AI Result:</label>
+            <div id="results">result...</div>
+
+            <label>Type your code analysis below:</label>
+            <textarea id="human_review_input"></textarea>
+            
+            
+            <button onclick="compare_results()">Tap to see AI review VS Your review</button>
+            <div id="human_vs_ai_result">result...</div>
 
         </main>
 
@@ -41,3 +48,4 @@
         <script src="scripts/scripts.js"></script>
     </body>
 </html>
+
